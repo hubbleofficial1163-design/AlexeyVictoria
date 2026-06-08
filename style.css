@@ -12,11 +12,14 @@ body {
 
 /* Hero секция на весь экран */
 /* Hero секция - используем svh для стабильной высоты */
+/* Hero секция - фикс для мобильных без дерганья */
 .hero-section {
     position: relative;
     width: 100%;
-    height: 100svh; /* стабильная высота без учета динамических панелей */
+    min-height: 100vh; /* fallback */
+    min-height: 100svh; /* modern browsers */
     overflow: hidden;
+    background-color: #000;
 }
 
 .hero-image {
@@ -29,10 +32,26 @@ body {
     display: block;
 }
 
+/* Убираем динамическое изменение высоты */
+@media (max-width: 768px) {
+    .hero-section {
+        height: auto !important;
+        min-height: 100vh !important;
+        min-height: 100svh !important;
+    }
+    
+    .hero-image {
+        position: relative;
+        height: auto;
+        min-height: 100vh;
+        min-height: 100svh;
+    }
+}
+
 /* Поддержка для старых браузеров */
 @supports not (height: 100svh) {
     .hero-section {
-        height: 100vh;
+        min-height: 100vh;
     }
 }
 
