@@ -1,24 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Hero секция на весь экран
+    // Hero секция - ТОЛЬКО один раз устанавливаем min-height, без динамических изменений
     const setHeroHeight = () => {
         const hero = document.getElementById('hero');
         if (hero) {
-            const windowHeight = window.innerHeight;
-            hero.style.minHeight = `${windowHeight}px`;
-            hero.style.height = `${windowHeight}px`;
+            // Убираем фиксированную высоту, оставляем только min-height
+            hero.style.minHeight = '100vh';
+            hero.style.minHeight = '100svh';
+            hero.style.height = 'auto';
         }
     };
 
     setHeroHeight();
 
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            setHeroHeight();
-        }, 100);
-    });
-
+    // Убираем resize-обработчик, который вызывает дерганье
+    // Оставляем только для ленивой загрузки изображения
     const heroImg = document.querySelector('.hero-image');
     if (heroImg && !heroImg.complete) {
         heroImg.addEventListener('load', () => {
@@ -173,7 +168,6 @@ document.querySelector('.slide-submit').addEventListener('click', function() {
         }
     });
 });
-
 
 // Эффект нажатия для кнопок на мобильных
 const allButtons = document.querySelectorAll('button, .send-button, .music-button, .slide-next, .slide-prev, .slide-submit');
